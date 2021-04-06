@@ -116,3 +116,91 @@ func TestCategoriesAvg_one(t *testing.T) {
 		t.Errorf("\n got > %v want > nil", res)
 	}
 }
+
+func TestPeriodsDynamic_negative(t *testing.T) {
+	first := map[types.Category]types.Money{
+		"cafe": 20,
+		"auto": 14,
+	}
+	second := map[types.Category]types.Money{
+		"cafe": 15,
+		"auto": 7,
+	}
+	want := map[types.Category]types.Money{
+		"cafe": -5,
+		"auto": -7,
+	}
+
+	got := PeriodsDynamic(first, second)
+
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf(" got > %v \n want > %v", got, want)
+	}
+
+}
+
+func TestPeriodsDynamic_positive(t *testing.T) {
+	first := map[types.Category]types.Money{
+		"cafe": 20,
+		"auto": 14,
+	}
+	second := map[types.Category]types.Money{
+		"cafe": 35,
+		"auto": 17,
+	}
+	want := map[types.Category]types.Money{
+		"cafe": 15,
+		"auto": 3,
+	}
+
+	got := PeriodsDynamic(first, second)
+
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf(" got > %v \n want > %v", got, want)
+	}
+
+}
+func TestPeriodsDynamic_notEqualMap(t *testing.T) {
+	first := map[types.Category]types.Money{
+		"cafe": 20,
+		"auto": 14,
+	}
+	second := map[types.Category]types.Money{
+		"cafe": 35,
+	}
+	want := map[types.Category]types.Money{
+		"cafe": 15,
+		"auto": -14,
+	}
+
+	got := PeriodsDynamic(first, second)
+
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf(" got > %v \n want > %v", got, want)
+	}
+
+}
+
+func TestPeriodsDynamic_OneMoreElem(t *testing.T) {
+	first := map[types.Category]types.Money{
+		"cafe": 20,
+		"auto": 14,
+	}
+	second := map[types.Category]types.Money{
+		"cafe":   35,
+		"auto":   17,
+		"mobile": 17,
+	}
+	want := map[types.Category]types.Money{
+		"cafe":   15,
+		"auto":   3,
+		"mobile": 17,
+	}
+
+	got := PeriodsDynamic(first, second)
+
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf(" got > %v \n want > %v", got, want)
+	}
+
+}
