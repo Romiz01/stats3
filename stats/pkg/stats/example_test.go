@@ -116,26 +116,3 @@ func TestCategoriesAvg_one(t *testing.T) {
 		t.Errorf("\n got > %v want > nil", res)
 	}
 }
-
-func TestPeriodsDynamicUser_OneMoreElem(t *testing.T) {
-	first := map[types.Category]types.Money{
-		"cafe": 20,
-		"auto": 14,
-	}
-	second := map[types.Category]types.Money{
-		"cafe":   35,
-		"auto":   17,
-		"mobile": 17,
-	}
-	amount := map[types.Category]types.Money{
-		"cafe":   15,
-		"auto":   3,
-		"mobile": 17,
-	}
-
-	got := PeriodsDynamic(first, second)
-
-	if !reflect.DeepEqual(amount, got) {
-		t.Errorf("\n got > %v \n amount > %v", got, amount)
-	}
-}
